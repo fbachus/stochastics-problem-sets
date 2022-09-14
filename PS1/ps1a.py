@@ -70,27 +70,26 @@ def greedy_cow_transport(cows,limit=10):
     print("number of cows: ", len(cows))
     def smallest_cow(cows):
         least_weight = 10
-        for cow in cows:
-            if least_weight > int(cow["weight"]):
-                least_weight = int(cow["weight"])
+        for cowname, weight in cows.items():
+            if least_weight > int(weight):
+                least_weight = int(weight)
         return least_weight
     while len(cows) > 0: 
-        shipcow = {"name": "muh", "weight": 0}
+        shipcow = ("moo", 0)
         cow_index = 0
         if current_limit == 0 or current_limit < smallest_cow(cows):
-            print("limit: ", current_limit)
             current_limit = limit
             tripno += 1
             trips.append([])
-        for cow in cows:
-            if shipcow["weight"] < cow["weight"] and cow["weight"] <= current_limit:
-                shipcow = cow
-                cowname = cow["name"]
-                cow_index = cows.index(cow)
+        for cow, weight in cows.items():
+            if shipcow[1] < weight and weight <= current_limit:
+                shipcow = (cow, weight)
+                cowname = cow
+                #cow_index = cows.index(cow)
         trips[tripno].append(shipcow)
         #print(cows, cow_index, '\n', "amount of trips: ", len(trips))
-        cows.pop(cow_index)
-        current_limit -= shipcow["weight"]
+        cows.pop(cowname)
+        current_limit -= shipcow[1]
     print("number of trips: ", len(trips))
     return trips
 
@@ -143,7 +142,7 @@ def compare_cow_transport_algorithms():
 
 
 start = time.time()
-#print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10), "\n\n\n")
+print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
 end = time.time()
 print("runtime greedy: ", end - start, "s")
 start = time.time()
