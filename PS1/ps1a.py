@@ -118,9 +118,11 @@ def brute_force_cow_transport(cows,limit=10):
     """
     # TODO: Your code here
     cow_list = cows.items()
+    smallest_shipment = ["a"] * 10
     for z in get_partitions(cows.items()):
-        print(z)
-    pass
+        if len(z) < len(smallest_shipment): 
+            smallest_shipment = z
+    return smallest_shipment
         
 # Problem 4
 def compare_cow_transport_algorithms():
@@ -140,5 +142,11 @@ def compare_cow_transport_algorithms():
     pass
 
 
+start = time.time()
 #print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10), "\n\n\n")
+end = time.time()
+print("runtime greedy: ", end - start, "s")
+start = time.time()
 print(brute_force_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
+end = time.time()
+print("runtime bruteforce: ", end - start, "s")
