@@ -6,6 +6,7 @@
 
 from ps1_partition import get_partitions
 import time
+import io
 
 #================================
 # Part A: Transporting Space Cows
@@ -25,6 +26,17 @@ def load_cows(filename):
     a dictionary of cow name (string), weight (int) pairs
     """
     # TODO: Your code here
+    #cows = []
+    cows = {}
+    with open(f"{filename}", "r", encoding = "UTF-8") as cowlist:
+        for cow in cowlist:
+            (name, weight) = cow.split(",")
+            #cow = {}
+            #cow["name"] = name
+            #cow["weight"] = int(weight)
+            #cows.append(cow)
+            cows[name] = int(weight)
+    return cows
     pass
 
 # Problem 2
@@ -51,7 +63,36 @@ def greedy_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    #cows = load_cows(ps1_cow_data.txt)
+    current_limit = limit
+    tripno = 0
+    trips = [[]]
+    print("number of cows: ", len(cows))
+    def smallest_cow(cows):
+        least_weight = 10
+        for cow in cows:
+            if least_weight > int(cow["weight"]):
+                least_weight = int(cow["weight"])
+        return least_weight
+    while len(cows) > 0: 
+        shipcow = {"name": "muh", "weight": 0}
+        cow_index = 0
+        if current_limit == 0 or current_limit < smallest_cow(cows):
+            print("limit: ", current_limit)
+            current_limit = limit
+            tripno += 1
+            trips.append([])
+        for cow in cows:
+            if shipcow["weight"] < cow["weight"] and cow["weight"] <= current_limit:
+                shipcow = cow
+                cowname = cow["name"]
+                cow_index = cows.index(cow)
+        trips[tripno].append(shipcow)
+        #print(cows, cow_index, '\n', "amount of trips: ", len(trips))
+        cows.pop(cow_index)
+        current_limit -= shipcow["weight"]
+    print("number of trips: ", len(trips))
+    return trips
 
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
@@ -76,6 +117,9 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
+    cow_list = cows.items()
+    for z in get_partitions(cows.items()):
+        print(z)
     pass
         
 # Problem 4
@@ -94,3 +138,7 @@ def compare_cow_transport_algorithms():
     """
     # TODO: Your code here
     pass
+
+
+#print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10), "\n\n\n")
+print(brute_force_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
