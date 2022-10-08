@@ -23,7 +23,22 @@ def dp_make_weight(egg_weights, target_weight, memo = {}):
     Returns: int, smallest number of eggs needed to make target weight
     """
     # TODO: Your code here
-    pass
+    #egg_weights = egg_weights
+    basket = []
+    current_weight = 0
+    while current_weight < target_weight:
+        egg = 1
+        for i in egg_weights:
+            if (i <= target_weight - current_weight):
+                egg = i
+        if basket[]:
+            basket.append((egg, 1))
+            current_weight += egg
+    number = len(basket)
+    #for i 
+    print(max(egg_weights))
+    print(f"{number} ( = {current_weight})")
+    return basket
 
 # EXAMPLE TESTING CODE, feel free to add more if you'd like
 if __name__ == '__main__':
@@ -34,3 +49,5 @@ if __name__ == '__main__':
     print("Expected ouput: 9 (3 * 25 + 2 * 10 + 4 * 1 = 99)")
     print("Actual output:", dp_make_weight(egg_weights, n))
     print()
+
+#dp_make_weight((1, 3, 4, 10), target_weight)

@@ -137,15 +137,15 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
+
+    start = time.perf_counter()
+    print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
+    end = time.perf_counter()
+    print("runtime greedy: ", end - start, "s")
+    start = time.time()
+    print(brute_force_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
+    end = time.perf_counter()
+    print("runtime bruteforce: ", end - start, "s")
     # TODO: Your code here
     pass
 
-
-start = time.time()
-print(greedy_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
-end = time.time()
-print("runtime greedy: ", end - start, "s")
-start = time.time()
-print(brute_force_cow_transport(load_cows("ps1_cow_data.txt"), limit=10))
-end = time.time()
-print("runtime bruteforce: ", end - start, "s")
